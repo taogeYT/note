@@ -1,0 +1,8 @@
+find /opt/soft/log/ -mtime +30 -name "*.log" -exec rm -rf {} \; 删除30天前的log文件
+find / ! -name "log.*" 
+file.`date +"%Y-%m-%d"`
+awk -F ":" '{print $1}' /etc/passwd 
+
+# nginx 生成密码
+auth_basic_user_file user.db;
+printf "test:$(openssl passwd -crypt 123456)\n" >>conf/htpasswd

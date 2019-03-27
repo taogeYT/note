@@ -1,0 +1,24 @@
+# 笔记目录
+
+* [git](note/git.md)
+* hadoop
+  * [cdh](note/hadoop/cdh.txt)
+  * [hive](note/hadoop/hive.md)
+* linux
+  * [install](note/linux/install.md)
+  * [shell](note/linux/shell.txt)
+* python
+  * [log4py](note/python/log4py.py)
+  * [logger](note/python/logger.py)
+* sql
+  * mysql
+    * [init_sql](note/sql/mysql/init_sql.sql)
+    * [mysql](note/sql/mysql/mysql.sql)
+  * oracle
+    * [geometry](note/sql/oracle/geometry.md)
+    * [merge](note/sql/oracle/merge.md)
+    * [oracle](note/sql/oracle/oracle.sql)
+    * [oracle管理](note/sql/oracle/oracle管理.md)
+    * [oracle配置](note/sql/oracle/oracle配置.md)
+    * [regexp](note/sql/oracle/regexp.md)
+* [xpath](note/xpath.md)

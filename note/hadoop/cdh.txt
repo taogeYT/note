@@ -1,0 +1,70 @@
+service iptables stop （临时关闭）
+chkconfig iptables off （重启后生效）
+setenforce 0 （临时生效）
+修改 /etc/selinux/config 下的 SELINUX=disabled （重启后永久生效）
+usermod -G hive,hdfs,hadoop impala
+groups impala
+
+#hive
+create database hive DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
+#activity monitor
+create database amon DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
+#授权root用户在主节点拥有所有数据库的访问权限
+grant all privileges on *.* to 'root'@'%' identified by 'password' with grant option;
+flush privileges;
+
+
+6.所有节点配置NTP服务
+yum install ntp
+chkconfig ntpd on
+chkconfig --list ntpd
+
+# ntp 配置文件本地服务器配置
+server  127.127.1.0 # local clock
+fudge   127.127.1.0 stratum 10
+
+ntpdate -u master #手动同步
+配置ntp客户端（所有datanode节点）
+#这里是主节点的主机名或者ip
+server master
+# ntp 服务启动
+service ntpd start
+
+
+/opt/cm-5.13.1/share/cmf/schema/scm_prepare_database.sh mysql cm -hlocalhost -uroot -ppassword --scm-host localhost scm scm scm
+useradd --system --home=/opt/cm-5.13.1/run/cloudera-scm-server/ --no-create-home --shell=/bin/false --comment "Cloudera SCM User" cloudera-scm
+
+/opt/cm-5.13.1/etc/init.d/cloudera-scm-server start;/opt/cm-5.13.1/etc/init.d/cloudera-scm-agent start
+/opt/cm-5.13.1/etc/init.d/cloudera-scm-server stop;/opt/cm-5.13.1/etc/init.d/cloudera-scm-agent stop
+
+
+rm -f /opt/cloudera-manager/cm-5.11.1/lib/cloudera-scm-agent/cm_guid
+/opt/cm-5.13.1/etc/init.d/cloudera-scm-agent restart
+
+
+/usr/share/java/mysql-connector-java.jar
+
+
+
+
+yum install ntp
+server 127.127.1.0
+fudge 127.127.1.0 stratum 10
+
+create database hive DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
+create database hue DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
+create database oozie DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
+grant all privileges on *.* to 'root'@'local' identified by 'hadoop' with grant option;
+flush privileges;
+
+/opt/cm-5.13.1/share/cmf/schema/scm_prepare_database.sh mysql cm -hlocalhost -uroot -phadoop --scm-host localhost scm scm scm
+useradd --system --home=/opt/cm-5.13.1/run/cloudera-scm-server/ --no-create-home --shell=/bin/false --comment "Cloudera SCM User" cloudera-scm
+/opt/cm-5.13.1/etc/init.d/cloudera-scm-server start;/opt/cm-5.13.1/etc/init.d/cloudera-scm-agent start
+/opt/cm-5.13.1/etc/init.d/cloudera-scm-server stop;/opt/cm-5.13.1/etc/init.d/cloudera-scm-agent stop
+
+echo never > /sys/kernel/mm/transparent_hugepage/defrag
+echo never > /sys/kernel/mm/transparent_hugepage/enabled
+echo 10 > /proc/sys/vm/swappiness
+/etc/sysctl.conf
+
+yum install libxslt-devel libxml2-devel
